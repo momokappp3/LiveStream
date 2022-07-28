@@ -1,13 +1,43 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using Microsoft.Azure.Kinect.BodyTracking;
+using System.Threading.Tasks;
 
 public class TrackerHandler : MonoBehaviour
 {
+    [SerializeField] public string DeviceID;
+    [SerializeField] public Vector3 IMU;
+    [SerializeField] public float Height;
+    [SerializeField] public float RoomScale = 1f;
+    //[SerializeField] public Vector3 SavedataGlobalPositionOffset;
+    //[SerializeField] bool setBoneDisplay=false;
+    [SerializeField] public int closestBody = 0;
+    [SerializeField] Transform root;
+    [SerializeField] public Text between;
+    [SerializeField] public Text foot;
+    [SerializeField] public CntrSaveDataKinect savedataKinect;
     public Dictionary<JointId, JointId> parentJointMap;
     Dictionary<JointId, Quaternion> basisJointMap;
-    public Quaternion[] absoluteJointRotations = new Quaternion[(int)JointId.Count];
-    public bool drawSkeletons = true;
+    [System.Serializable]
+    public class CAbsoluteJoint
+    {
+        public string Name;
+        public Transform Node;
+        public Quaternion absoluteJointRotations;
+        public JointConfidenceLevel precition;
+    }
+    public CAbsoluteJoint[] cAbsoluteJoint = new CAbsoluteJoint[(int)JointId.Count];
+    public bool FlagSetHeight = false;
+
+    ///--------------------------------
+    int sampling = 0;
+    float heightSum = 0f;
+    int skeletonNum = 0;
+
+
+    //public Quaternion[] absoluteJointRotations = new Quaternion[(int)JointId.Count];
+    //public bool drawSkeletons = true;
     Quaternion Y_180_FLIP = new Quaternion(0.0f, 1.0f, 0.0f, 0.0f);
 
     // Start is called before the first frame update
@@ -16,7 +46,7 @@ public class TrackerHandler : MonoBehaviour
         parentJointMap = new Dictionary<JointId, JointId>();
 
         // pelvis has no parent so set to count
-        parentJointMap[JointId.Pelvis] = JointId.Count;
+        parentJointMap[JointId.Pelvis] = JointId.Pelvis;
         parentJointMap[JointId.SpineNavel] = JointId.Pelvis;
         parentJointMap[JointId.SpineChest] = JointId.SpineNavel;
         parentJointMap[JointId.Neck] = JointId.SpineChest;
@@ -26,23 +56,23 @@ public class TrackerHandler : MonoBehaviour
         parentJointMap[JointId.WristLeft] = JointId.ElbowLeft;
         parentJointMap[JointId.HandLeft] = JointId.WristLeft;
         parentJointMap[JointId.HandTipLeft] = JointId.HandLeft;
-        parentJointMap[JointId.ThumbLeft] = JointId.HandLeft;
+        parentJointMap[JointId.ThumbLeft] = JointId.WristLeft;
         parentJointMap[JointId.ClavicleRight] = JointId.SpineChest;
         parentJointMap[JointId.ShoulderRight] = JointId.ClavicleRight;
         parentJointMap[JointId.ElbowRight] = JointId.ShoulderRight;
         parentJointMap[JointId.WristRight] = JointId.ElbowRight;
         parentJointMap[JointId.HandRight] = JointId.WristRight;
         parentJointMap[JointId.HandTipRight] = JointId.HandRight;
-        parentJointMap[JointId.ThumbRight] = JointId.HandRight;
-        parentJointMap[JointId.HipLeft] = JointId.SpineNavel;
+        parentJointMap[JointId.ThumbRight] = JointId.WristRight;
+        parentJointMap[JointId.HipLeft] = JointId.Pelvis;
         parentJointMap[JointId.KneeLeft] = JointId.HipLeft;
         parentJointMap[JointId.AnkleLeft] = JointId.KneeLeft;
         parentJointMap[JointId.FootLeft] = JointId.AnkleLeft;
-        parentJointMap[JointId.HipRight] = JointId.SpineNavel;
+        parentJointMap[JointId.HipRight] = JointId.Pelvis;
         parentJointMap[JointId.KneeRight] = JointId.HipRight;
         parentJointMap[JointId.AnkleRight] = JointId.KneeRight;
         parentJointMap[JointId.FootRight] = JointId.AnkleRight;
-        parentJointMap[JointId.Head] = JointId.Pelvis;
+        parentJointMap[JointId.Head] = JointId.Neck;
         parentJointMap[JointId.Nose] = JointId.Head;
         parentJointMap[JointId.EyeLeft] = JointId.Head;
         parentJointMap[JointId.EarLeft] = JointId.Head;
@@ -99,16 +129,24 @@ public class TrackerHandler : MonoBehaviour
         basisJointMap[JointId.EarLeft] = spineHipBasis;
         basisJointMap[JointId.EyeRight] = spineHipBasis;
         basisJointMap[JointId.EarRight] = spineHipBasis;
+
+        for (int jointNum = 0; jointNum < (int)JointId.Count; jointNum++)
+        {
+            cAbsoluteJoint[jointNum].Name = ((JointId)jointNum).ToString();
+        }
+
+        FlagSetHeight = false;
     }
 
-    public void updateTracker(BackgroundData trackerFrameData)
+    public void updateTracker(BackgroundData _trackerFrameData, int _skeletonNumber)
     {
         //this is an array in case you want to get the n closest bodies
-        int closestBody = findClosestTrackedBody(trackerFrameData);
+        //int closestBody = findClosestTrackedBody(trackerFrameData);
 
         // render the closest body
-        Body skeleton = trackerFrameData.Bodies[closestBody];
-        renderSkeleton(skeleton, 0);
+        skeletonNum = _skeletonNumber;
+        Body skeleton = _trackerFrameData.Bodies[_skeletonNumber];
+        renderSkeleton(skeleton);
     }
 
     int findIndexFromId(BackgroundData frameData, int id)
@@ -127,63 +165,97 @@ public class TrackerHandler : MonoBehaviour
 
     private int findClosestTrackedBody(BackgroundData trackerFrameData)
     {
-        int closestBody = -1;
+        //int closestBody = -1;
         const float MAX_DISTANCE = 5000.0f;
         float minDistanceFromKinect = MAX_DISTANCE;
-        for (int i = 0; i < (int)trackerFrameData.NumOfBodies; i++)
+        //for (int i = 0; 0 < (int)trackerFrameData.NumOfBodies; i++)
         {
-            var pelvisPosition = trackerFrameData.Bodies[i].JointPositions3D[(int)JointId.Pelvis];
+            var pelvisPosition = trackerFrameData.Bodies[closestBody].JointPositions3D[(int)JointId.Pelvis];
             Vector3 pelvisPos = new Vector3((float)pelvisPosition.X, (float)pelvisPosition.Y, (float)pelvisPosition.Z);
             if (pelvisPos.magnitude < minDistanceFromKinect)
             {
-                closestBody = i;
+                //closestBody = 0;
                 minDistanceFromKinect = pelvisPos.magnitude;
             }
         }
         return closestBody;
     }
 
-    public void turnOnOffSkeletons()
+    public void renderSkeleton(Body skeleton)
     {
-        drawSkeletons = !drawSkeletons;
-        const int bodyRenderedNum = 0;
+        ///Kinectの姿勢
+        var imu = new Vector3(IMU.x, IMU.y, IMU.z);
+        var axis = Quaternion.FromToRotation(Vector3.down, imu.normalized);
+        //this.transform.Find("Axis").localRotation = axis;
         for (int jointNum = 0; jointNum < (int)JointId.Count; jointNum++)
         {
-            transform.GetChild(bodyRenderedNum).GetChild(jointNum).gameObject.GetComponent<MeshRenderer>().enabled = drawSkeletons;
-            transform.GetChild(bodyRenderedNum).GetChild(jointNum).GetChild(0).GetComponent<MeshRenderer>().enabled = drawSkeletons;
+            Vector3 jointLocationFromPervis
+                = new Vector3(
+                  skeleton.JointPositions3D[jointNum].X,
+                  skeleton.JointPositions3D[jointNum].Y,
+                -(skeleton.JointPositions3D[jointNum].Z)
+                );
+            Quaternion jointRot = Y_180_FLIP * new Quaternion(
+                -skeleton.JointRotations[jointNum].X, skeleton.JointRotations[jointNum].Y,
+                skeleton.JointRotations[jointNum].Z, -skeleton.JointRotations[jointNum].W)
+                * Quaternion.Inverse(basisJointMap[(JointId)jointNum]);
+            cAbsoluteJoint[jointNum].precition = skeleton.JointPrecisions[jointNum];
+            //cAbsoluteJoint[jointNum].absoluteJointRotations = Quaternion.Inverse(axis) * jointRot;
+            cAbsoluteJoint[jointNum].Node.localPosition = Quaternion.Inverse(axis) * jointLocationFromPervis;
+            cAbsoluteJoint[jointNum].Node.localRotation = Quaternion.Inverse(axis) * jointRot;
+            ///骨の長さ（スケール）合わせ
+            var parentNode = cAbsoluteJoint[(int)parentJointMap[(JointId)jointNum]].Node;
+            var ownNode = cAbsoluteJoint[jointNum].Node;
+            var magnitude = (ownNode.position - parentNode.position).magnitude;
+            var parentLocater = parentNode.Find("Locater");
+            parentLocater.localScale
+                = new Vector3(1f, magnitude / 2f, 1f);
+            parentLocater.Find("Bone").localScale
+                = new Vector3(0.02f, 1f, 0.02f);
+            parentLocater.Find("Bone").localPosition
+                = new Vector3(0f, 1f, 0f);
+
         }
-    }
-
-    public void renderSkeleton(Body skeleton, int skeletonNumber)
-    {
-        for (int jointNum = 0; jointNum < (int)JointId.Count; jointNum++)
+        var menu = savedataKinect.cSettingKinect[(int)savedataKinect.kinectDevice].Menu.transform;
+        if (menu != null && skeletonNum == 0)
         {
-            Vector3 jointPos = new Vector3(skeleton.JointPositions3D[jointNum].X, -skeleton.JointPositions3D[jointNum].Y, skeleton.JointPositions3D[jointNum].Z);
-            Vector3 offsetPosition = transform.rotation * jointPos;
-            Vector3 positionInTrackerRootSpace = transform.position + offsetPosition;
-            Quaternion jointRot = Y_180_FLIP * new Quaternion(skeleton.JointRotations[jointNum].X, skeleton.JointRotations[jointNum].Y,
-                skeleton.JointRotations[jointNum].Z, skeleton.JointRotations[jointNum].W) * Quaternion.Inverse(basisJointMap[(JointId)jointNum]);
-            absoluteJointRotations[jointNum] = jointRot;
-            // these are absolute body space because each joint has the body root for a parent in the scene graph
-            transform.GetChild(skeletonNumber).GetChild(jointNum).localPosition = jointPos;
-            transform.GetChild(skeletonNumber).GetChild(jointNum).localRotation = jointRot;
-
-            const int boneChildNum = 0;
-            if (parentJointMap[(JointId)jointNum] != JointId.Head && parentJointMap[(JointId)jointNum] != JointId.Count)
+            ///現状の高さ調整
+            if (FlagSetHeight)
             {
-                Vector3 parentTrackerSpacePosition = new Vector3(skeleton.JointPositions3D[(int)parentJointMap[(JointId)jointNum]].X,
-                    -skeleton.JointPositions3D[(int)parentJointMap[(JointId)jointNum]].Y, skeleton.JointPositions3D[(int)parentJointMap[(JointId)jointNum]].Z);
-                Vector3 boneDirectionTrackerSpace = jointPos - parentTrackerSpacePosition;
-                Vector3 boneDirectionWorldSpace = transform.rotation * boneDirectionTrackerSpace;
-                Vector3 boneDirectionLocalSpace = Quaternion.Inverse(transform.GetChild(skeletonNumber).GetChild(jointNum).rotation) * Vector3.Normalize(boneDirectionWorldSpace);
-                transform.GetChild(skeletonNumber).GetChild(jointNum).GetChild(boneChildNum).localScale = new Vector3(1, 20.0f * 0.5f * boneDirectionWorldSpace.magnitude, 1);
-                transform.GetChild(skeletonNumber).GetChild(jointNum).GetChild(boneChildNum).localRotation = Quaternion.FromToRotation(Vector3.up, boneDirectionLocalSpace);
-                transform.GetChild(skeletonNumber).GetChild(jointNum).GetChild(boneChildNum).position = transform.GetChild(skeletonNumber).GetChild(jointNum).position - 0.5f * boneDirectionWorldSpace;
+                if (sampling < 60)
+                {
+                    var precitionL = skeleton.JointPrecisions[(int)JointId.FootLeft];
+                    var precitionR = skeleton.JointPrecisions[(int)JointId.FootRight];
+                    if (precitionL >= JointConfidenceLevel.Medium
+                        && precitionR >= JointConfidenceLevel.Medium)
+                    {///信頼度の高いものだけ有効
+                        sampling++;
+                        Vector3 floor = new Vector3(0f, 0f, 0f);
+                        floor += cAbsoluteJoint[(int)JointId.FootLeft].Node.position;
+                        floor += cAbsoluteJoint[(int)JointId.FootRight].Node.position;
+                        //var oldFloor = this.transform.Find("PositionBody").position;
+                        var oldFloor = this.transform.parent.position;
+                        heightSum += oldFloor.y - floor.y / 2f;
+                        Height = heightSum / sampling;
+                    }
+                }
+                else
+                {
+                    FlagSetHeight = false;
+                    {
+                        //var oldFloor = this.transform.Find("PositionBody").position;
+                        var oldFloor = this.transform.parent.position;
+                        //this.transform.Find("PositionBody").position = new Vector3(oldFloor.x, Height, oldFloor.z);
+                        this.transform.parent.position = new Vector3(oldFloor.x, Height, oldFloor.z);
+                    }
+                    heightSum = 0f;
+                    sampling = 0;
+                }
+                menu.Find("Height").Find("Foot").GetComponent<Text>().text = Height.ToString();
             }
-            else
-            {
-                transform.GetChild(skeletonNumber).GetChild(jointNum).GetChild(boneChildNum).gameObject.SetActive(false);
-            }
+            menu.Find("Wrist").Find("Between").GetComponent<Text>().text =
+                (cAbsoluteJoint[(int)JointId.WristLeft].Node.position
+                - cAbsoluteJoint[(int)JointId.WristRight].Node.position).magnitude + "m";
         }
     }
 
@@ -193,16 +265,17 @@ public class TrackerHandler : MonoBehaviour
         Quaternion parentJointRotationBodySpace = Quaternion.identity;
         if (parent == JointId.Count)
         {
-            parentJointRotationBodySpace = Y_180_FLIP;
+            //parentJointRotationBodySpace = Y_180_FLIP;
         }
         else
         {
-            parentJointRotationBodySpace = absoluteJointRotations[(int)parent];
+            parentJointRotationBodySpace = cAbsoluteJoint[(int)parent].absoluteJointRotations;
         }
-        Quaternion jointRotationBodySpace = absoluteJointRotations[(int)jointId];
-        Quaternion relativeRotation =  Quaternion.Inverse(parentJointRotationBodySpace) * jointRotationBodySpace;
+        Quaternion jointRotationBodySpace = cAbsoluteJoint[(int)jointId].absoluteJointRotations;
+        Quaternion relativeRotation = Quaternion.Inverse(parentJointRotationBodySpace) * jointRotationBodySpace;
 
         return relativeRotation;
     }
+
 
 }
