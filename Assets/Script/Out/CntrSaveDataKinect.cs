@@ -7,7 +7,7 @@ using Microsoft.Azure.Kinect.Sensor;
 
 public class CntrSaveDataKinect : MonoBehaviour
 {
-    /*
+    
     [System.Serializable]
     public class CSettingKinect
     {
@@ -45,13 +45,15 @@ public class CntrSaveDataKinect : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        var savedataTotal = this.GetComponent<SaveDataAdmin>().SaveDataTotal;
+        //var savedataTotal = this.GetComponent<SaveDataAdmin>().SaveDataTotal;
         var deviceCount = this.GetComponent<KinectMain>().DeviceCount;
         for (var devId = 0; devId < deviceCount; devId++)
         {
             var disp = cSettingKinect[devId];
             Vector3 deltaCamAxis = new Vector3(0f, 0f, 0f);///深度カメラのIMU差分補正値
-            var savedata = savedataTotal.cKinectSetting[devId];
+            /*
+
+            //var savedata = savedataTotal.cKinectSetting[devId];
             {
                 ///FOVのトグル
                 ///https://docs.microsoft.com/ja-jp/azure/kinect-dk/coordinate-systems#depth-and-color-camera
@@ -132,16 +134,18 @@ public class CntrSaveDataKinect : MonoBehaviour
                     }
                 }
             }
+                        */
         }
     }
-
+    
     public void UpdateFromLoadedData()
     {
+            /*
         var savedataTotal = this.GetComponent<SaveDataAdmin>().SaveDataTotal;
         for (var num = 0; num < 1; num++)
         {
             var disp = cSettingKinect[num];
-            SaveDataAdmin.CSaveDataTotal.CKinectSetting savedata = new SaveDataAdmin.CSaveDataTotal.CKinectSetting();
+            //SaveDataAdmin.CSaveDataTotal.CKinectSetting savedata = new SaveDataAdmin.CSaveDataTotal.CKinectSetting();
             savedata = savedataTotal.cKinectSetting[num];
             disp.Height.text = savedata.mHeight.ToString();
             //disp.RoomScale.text = savedata.mRoomScale.ToString("###0.0");
@@ -159,6 +163,7 @@ public class CntrSaveDataKinect : MonoBehaviour
             disp.Translate.z.text = savedata.mTranslate.z.ToString("###0.0");
             disp.Translate.z.transform.parent.Find("Slider").GetComponent<Slider>().value = savedata.mTranslate.z;
         }
+    */
     }
 
 #if false
@@ -214,5 +219,4 @@ public class CntrSaveDataKinect : MonoBehaviour
         this.GetComponent<KinectMain>().Seq[1] = KinectMain.ESeq.openDevice;
         this.GetComponent<KinectMain>().Seq[0] = KinectMain.ESeq.closeDevice;
     }
-    */
 }

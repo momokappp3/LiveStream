@@ -22,7 +22,8 @@ public class main : MonoBehaviour
             {
                 if (m_lastFrameData.NumOfBodies != 0)
                 {
-                    m_tracker.GetComponent<TrackerHandler>().updateTracker(m_lastFrameData);
+                    //変更
+                    m_tracker.GetComponent<TrackerHandler>().updateTracker(m_lastFrameData, 0);
                 }
             }
         }
