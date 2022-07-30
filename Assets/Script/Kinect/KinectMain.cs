@@ -123,17 +123,19 @@ public class KinectMain : MonoBehaviour
 					break;
 				case ESeq.openDevice:
 					{
-						//deviceIDtext[devId] = m_skeletalTrackingProvider[devId].SerialNum;
-						//this.GetComponent<SaveDataAdmin>().SaveDataTotal.cKinectSetting[devId].mName = deviceIDtext[devId];
+						/*
+						deviceIDtext[devId] = m_skeletalTrackingProvider[devId].SerialNum;
+						this.GetComponent<SaveDataAdmin>().SaveDataTotal.cKinectSetting[devId].mName = deviceIDtext[devId];
 						m_tracker[devId * DeviceCount].GetComponent<TrackerHandler>().DeviceID = deviceIDtext[devId];
 						m_tracker[devId * DeviceCount + 1].GetComponent<TrackerHandler>().DeviceID = deviceIDtext[devId];
-						/*
+						
 						var cGameListSettings = this.transform.GetComponent<SaveDataAdmin>().SaveDataTotal.cGameSetting.cGameListSetting;
 						for (int num = 0; num < cGameListSettings.Count; num++)
 						{
 							cGameListSettings[num].mIsActiveKinects[devId].Name = deviceIDtext[devId];
 						}
 						*/
+						
 					}
 					foreach (var tracker in m_tracker)
 					{
@@ -163,12 +165,12 @@ public class KinectMain : MonoBehaviour
 					break;
 				case ESeq.playDevice:
 					var effectiveDevice = deviceIDtext[devId];
-					/*
+					
 					if (devId != (int)this.transform.GetComponent<CntrSaveDataKinect>().kinectDevice)
 					{
 						break;
 					}
-					*/
+					
 					if (m_backgroundDataProvider[devId].IsRunning)
 					{
 						if (m_backgroundDataProvider[devId].GetCurrentFrameData(ref m_lastFrameData[devId]))
