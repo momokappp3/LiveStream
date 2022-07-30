@@ -139,6 +139,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 210279053}
+  - component: {fileID: 4499496012820991540}
+  - component: {fileID: 3227676288687192282}
+  - component: {fileID: 7723214839195033500}
+  - component: {fileID: 2352732289002506958}
   m_Layer: 0
   m_Name: Kinect4AzureTracker
   m_TagString: Untagged
@@ -162,6 +166,214 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4499496012820991540
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 210279052}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65e111eb3fa72b14e98a48f4307e54f8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DeviceID: 
+  IMU: {x: 0, y: 0, z: 0}
+  Height: 0
+  RoomScale: 980
+  closestBody: 0
+  root: {fileID: 5137774439132724925}
+  between: {fileID: 0}
+  foot: {fileID: 0}
+  savedataKinect: {fileID: 0}
+  cAbsoluteJoint:
+  - Name: 
+    Node: {fileID: 0}
+    absoluteJointRotations: {x: 0, y: 0, z: 0, w: 0}
+    precition: 0
+  - Name: 
+    Node: {fileID: 0}
+    absoluteJointRotations: {x: 0, y: 0, z: 0, w: 0}
+    precition: 0
+  - Name: 
+    Node: {fileID: 0}
+    absoluteJointRotations: {x: 0, y: 0, z: 0, w: 0}
+    precition: 0
+  - Name: 
+    Node: {fileID: 0}
+    absoluteJointRotations: {x: 0, y: 0, z: 0, w: 0}
+    precition: 0
+  - Name: 
+    Node: {fileID: 0}
+    absoluteJointRotations: {x: 0, y: 0, z: 0, w: 0}
+    precition: 0
+  - Name: 
+    Node: {fileID: 0}
+    absoluteJointRotations: {x: 0, y: 0, z: 0, w: 0}
+    precition: 0
+  - Name: 
+    Node: {fileID: 0}
+    absoluteJointRotations: {x: 0, y: 0, z: 0, w: 0}
+    precition: 0
+  - Name: 
+    Node: {fileID: 0}
+    absoluteJointRotations: {x: 0, y: 0, z: 0, w: 0}
+    precition: 0
+  - Name: 
+    Node: {fileID: 0}
+    absoluteJointRotations: {x: 0, y: 0, z: 0, w: 0}
+    precition: 0
+  - Name: 
+    Node: {fileID: 0}
+    absoluteJointRotations: {x: 0, y: 0, z: 0, w: 0}
+    precition: 0
+  - Name: 
+    Node: {fileID: 0}
+    absoluteJointRotations: {x: 0, y: 0, z: 0, w: 0}
+    precition: 0
+  - Name: 
+    Node: {fileID: 0}
+    absoluteJointRotations: {x: 0, y: 0, z: 0, w: 0}
+    precition: 0
+  - Name: 
+    Node: {fileID: 0}
+    absoluteJointRotations: {x: 0, y: 0, z: 0, w: 0}
+    precition: 0
+  - Name: 
+    Node: {fileID: 0}
+    absoluteJointRotations: {x: 0, y: 0, z: 0, w: 0}
+    precition: 0
+  - Name: 
+    Node: {fileID: 0}
+    absoluteJointRotations: {x: 0, y: 0, z: 0, w: 0}
+    precition: 0
+  - Name: 
+    Node: {fileID: 0}
+    absoluteJointRotations: {x: 0, y: 0, z: 0, w: 0}
+    precition: 0
+  - Name: 
+    Node: {fileID: 0}
+    absoluteJointRotations: {x: 0, y: 0, z: 0, w: 0}
+    precition: 0
+  - Name: 
+    Node: {fileID: 0}
+    absoluteJointRotations: {x: 0, y: 0, z: 0, w: 0}
+    precition: 0
+  - Name: 
+    Node: {fileID: 0}
+    absoluteJointRotations: {x: 0, y: 0, z: 0, w: 0}
+    precition: 0
+  - Name: 
+    Node: {fileID: 0}
+    absoluteJointRotations: {x: 0, y: 0, z: 0, w: 0}
+    precition: 0
+  - Name: 
+    Node: {fileID: 0}
+    absoluteJointRotations: {x: 0, y: 0, z: 0, w: 0}
+    precition: 0
+  - Name: 
+    Node: {fileID: 0}
+    absoluteJointRotations: {x: 0, y: 0, z: 0, w: 0}
+    precition: 0
+  - Name: 
+    Node: {fileID: 0}
+    absoluteJointRotations: {x: 0, y: 0, z: 0, w: 0}
+    precition: 0
+  - Name: 
+    Node: {fileID: 0}
+    absoluteJointRotations: {x: 0, y: 0, z: 0, w: 0}
+    precition: 0
+  - Name: 
+    Node: {fileID: 0}
+    absoluteJointRotations: {x: 0, y: 0, z: 0, w: 0}
+    precition: 0
+  - Name: 
+    Node: {fileID: 0}
+    absoluteJointRotations: {x: 0, y: 0, z: 0, w: 0}
+    precition: 0
+  - Name: 
+    Node: {fileID: 0}
+    absoluteJointRotations: {x: 0, y: 0, z: 0, w: 0}
+    precition: 0
+  - Name: 
+    Node: {fileID: 0}
+    absoluteJointRotations: {x: 0, y: 0, z: 0, w: 0}
+    precition: 0
+  - Name: 
+    Node: {fileID: 0}
+    absoluteJointRotations: {x: 0, y: 0, z: 0, w: 0}
+    precition: 0
+  - Name: 
+    Node: {fileID: 0}
+    absoluteJointRotations: {x: 0, y: 0, z: 0, w: 0}
+    precition: 0
+  - Name: 
+    Node: {fileID: 0}
+    absoluteJointRotations: {x: 0, y: 0, z: 0, w: 0}
+    precition: 0
+  - Name: 
+    Node: {fileID: 0}
+    absoluteJointRotations: {x: 0, y: 0, z: 0, w: 0}
+    precition: 0
+  FlagSetHeight: 1
+--- !u!114 &3227676288687192282
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 210279052}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8640fbde0631e20478910e8966bf07ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  trackerHandler: {fileID: 4499496012820991540}
+  handStampPrefab: {fileID: 8821154128432779103, guid: c97c7e3737bf36244aba64d97816c153,
+    type: 3}
+  Colors:
+  - {fileID: 2100000, guid: 555659fdbf44e6c4e9f25f741f52f398, type: 2}
+  - {fileID: 2100000, guid: 928747a274fb2754d93e69c58625b136, type: 2}
+  - {fileID: 2100000, guid: 2df5f4ab442b2a24daf178f449f8363f, type: 2}
+--- !u!114 &7723214839195033500
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 210279052}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ffa948409eb355449e52963d5d75901, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  trackerHandler: {fileID: 4499496012820991540}
+  pelvisStampPrefab: {fileID: 8821154128432779103, guid: 5e5240296a3f20d4c9b1797afa562655,
+    type: 3}
+  Colors:
+  - {fileID: 2100000, guid: 1e9be83b21cb3eb4ea427b357266a538, type: 2}
+  - {fileID: 2100000, guid: 3251124e07682e746a677c59180913f9, type: 2}
+  - {fileID: 2100000, guid: 1625f6dd4ebeb8146b6ff343e061421c, type: 2}
+--- !u!114 &2352732289002506958
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 210279052}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e44cf678053bde4dbb12a2cd084f739, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  trackerHandler: {fileID: 4499496012820991540}
+  footStampPrefab: {fileID: 8821154128432779103, guid: b2dce0b9d3345e64780d3666481c0f30,
+    type: 3}
+  Colors:
+  - {fileID: 2100000, guid: 983df8e6dea2ac4419ced6760078e011, type: 2}
+  - {fileID: 2100000, guid: 489a1699fda1ada43968cc004ca43ace, type: 2}
+  - {fileID: 2100000, guid: ca3268e2954d69e4787efa453bf9aabc, type: 2}
 --- !u!1 &325103643
 GameObject:
   m_ObjectHideFlags: 0

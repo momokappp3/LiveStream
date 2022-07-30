@@ -1,10 +1,10 @@
-ï»¿using System.Collections.Generic;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Microsoft.Azure.Kinect.BodyTracking;
 using System.Threading.Tasks;
 
-public class PuppetAvatar : MonoBehaviour
+public class TrackerHandler : MonoBehaviour
 {
     [SerializeField] public string DeviceID;
     [SerializeField] public Vector3 IMU;
@@ -183,7 +183,7 @@ public class PuppetAvatar : MonoBehaviour
 
     public void renderSkeleton(Body skeleton)
     {
-        ///Kinectã®å§¿å‹¢
+        ///Kinect‚Ìp¨
         var imu = new Vector3(IMU.x, IMU.y, IMU.z);
         var axis = Quaternion.FromToRotation(Vector3.down, imu.normalized);
         //this.transform.Find("Axis").localRotation = axis;
@@ -203,7 +203,7 @@ public class PuppetAvatar : MonoBehaviour
             //cAbsoluteJoint[jointNum].absoluteJointRotations = Quaternion.Inverse(axis) * jointRot;
             cAbsoluteJoint[jointNum].Node.localPosition = Quaternion.Inverse(axis) * jointLocationFromPervis;
             cAbsoluteJoint[jointNum].Node.localRotation = Quaternion.Inverse(axis) * jointRot;
-            ///éª¨ã®é•·ã•ï¼ˆã‚¹ã‚±ãƒ¼ãƒ«ï¼‰åˆã‚ã›
+            ///œ‚Ì’·‚³iƒXƒP[ƒ‹j‡‚í‚¹
             var parentNode = cAbsoluteJoint[(int)parentJointMap[(JointId)jointNum]].Node;
             var ownNode = cAbsoluteJoint[jointNum].Node;
             var magnitude = (ownNode.position - parentNode.position).magnitude;
@@ -219,7 +219,7 @@ public class PuppetAvatar : MonoBehaviour
         var menu = savedataKinect.cSettingKinect[(int)savedataKinect.kinectDevice].Menu.transform;
         if (menu != null && skeletonNum == 0)
         {
-            ///ç¾çŠ¶ã®é«˜ã•èª¿æ•´
+            ///Œ»ó‚Ì‚‚³’²®
             if (FlagSetHeight)
             {
                 if (sampling < 60)
@@ -228,7 +228,7 @@ public class PuppetAvatar : MonoBehaviour
                     var precitionR = skeleton.JointPrecisions[(int)JointId.FootRight];
                     if (precitionL >= JointConfidenceLevel.Medium
                         && precitionR >= JointConfidenceLevel.Medium)
-                    {///ä¿¡é ¼åº¦ã®é«˜ã„ã‚‚ã®ã ã‘æœ‰åŠ¹
+                    {///M—Š“x‚Ì‚‚¢‚à‚Ì‚¾‚¯—LŒø
                         sampling++;
                         Vector3 floor = new Vector3(0f, 0f, 0f);
                         floor += cAbsoluteJoint[(int)JointId.FootLeft].Node.position;
