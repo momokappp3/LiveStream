@@ -34,9 +34,9 @@ public class CntrSaveDataScreen : MonoBehaviour
     
     void Awake()
     {
-        dropdowns[(int)EDropDown.Wall].value = (int)EDisplays.Display2;
-        dropdowns[(int)EDropDown.Left].value = (int)EDisplays.Display3;
-        dropdowns[(int)EDropDown.Right].value = (int)EDisplays.Display4;
+        //dropdowns[(int)EDropDown.Wall].value = (int)EDisplays.Display1;
+        //dropdowns[(int)EDropDown.Left].value = (int)EDisplays.Display3;
+        //dropdowns[(int)EDropDown.Right].value = (int)EDisplays.Display4;
     }
     private void Start()
     {

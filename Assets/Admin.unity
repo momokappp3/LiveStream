@@ -6114,7 +6114,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1655565414}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 255839a6298ef904f8f6cf7d7b03dccb, type: 3}
   m_Name: 
@@ -6282,8 +6282,8 @@ MonoBehaviour:
   Kinect4AzureBodyTracker: {fileID: 210279052, guid: 019b917704c3c29478d778e143d411d2,
     type: 3}
   m_tracker: []
-  between: {fileID: 0}
-  foot: {fileID: 0}
+  between: {fileID: 1036893816}
+  foot: {fileID: 60311796}
   kinectKill: {fileID: 1110073103}
   MTrackerHierarchy:
   - {fileID: 0}

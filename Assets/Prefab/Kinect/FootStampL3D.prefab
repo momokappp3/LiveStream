@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 2873651567143895970}
   - component: {fileID: 7325066386073325009}
   - component: {fileID: 6093635219956181651}
+  - component: {fileID: 3119965768122603898}
   m_Layer: 0
   m_Name: Touch
   m_TagString: Untagged
@@ -97,6 +98,19 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.49999997
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &3119965768122603898
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1548478493679329365}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa8c7faab1156ad4f843c0f2b520f51d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsLeft: 0
 --- !u!1 &3182309808152103963
 GameObject:
   m_ObjectHideFlags: 0
