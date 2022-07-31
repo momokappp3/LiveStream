@@ -37,7 +37,7 @@ public class CntrSaveDataGames : MonoBehaviour
     void Start()
     {
         //cSettingGamesCommon = new CSettingGamesCommon();
-        /*
+        
         {
             SaveDataAdmin.CSaveDataTotal.EGameLists gameID = SaveDataAdmin.CSaveDataTotal.EGameLists.GameSetup;
             var savedata = this.GetComponent<SaveDataAdmin>().SaveDataTotal.cGameSetting.cGameListSettings;
@@ -48,10 +48,10 @@ public class CntrSaveDataGames : MonoBehaviour
             }
         }
         UpdateFromLoadedData();
-        */
-    //}
+        
+    }
 
-/*
+
     // Update is called once per frame
     void Update()
     {
@@ -168,5 +168,6 @@ public class CntrSaveDataGames : MonoBehaviour
         }
         Debug.Log(savedata[gameIDint].mTimeLimit.ToString());
     }
-*/
+    */
+
 }

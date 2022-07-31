@@ -7,7 +7,7 @@ using Assets.Scripts._System;
 
 public class CntrSaveDataScreen : MonoBehaviour
 {
-    /*
+    
     [SerializeField] public Dropdown[] dropdowns;
     [SerializeField] public Toggle fullScreen;
     public enum EDisplays
@@ -31,15 +31,13 @@ public class CntrSaveDataScreen : MonoBehaviour
             {EDropDown.Right, EDisplays.Display4 },
         };
 
-    /*
+    
     void Awake()
     {
         dropdowns[(int)EDropDown.Wall].value = (int)EDisplays.Display2;
         dropdowns[(int)EDropDown.Left].value = (int)EDisplays.Display3;
         dropdowns[(int)EDropDown.Right].value = (int)EDisplays.Display4;
     }
-    */
-    /*
     private void Start()
     {
         Debug.Log("ディスプレイの数:" + Display.displays.Length);
@@ -58,26 +56,33 @@ public class CntrSaveDataScreen : MonoBehaviour
     }
     public void ChangedWall(int _display)
     {
+        /*
         displayNum[EDropDown.Wall] = (EDisplays)(_display);
         var savedataTotal = this.GetComponent<SaveDataAdmin>().SaveDataTotal;
         savedataTotal.cSettingScreen.displayLocation[(int)EDropDown.Wall] = displayNum[EDropDown.Wall];
+        */
     }
     public void ChangedLeft(int _display)
     {
+        /*
         displayNum[EDropDown.Left] = (EDisplays)(_display);
         var savedataTotal = this.GetComponent<SaveDataAdmin>().SaveDataTotal;
         savedataTotal.cSettingScreen.displayLocation[(int)EDropDown.Left] = displayNum[EDropDown.Left];
+        */
     }
     public void ChangedRight(int _display)
     {
+        /*
         displayNum[EDropDown.Right] = (EDisplays)(_display);
         var savedataTotal = this.GetComponent<SaveDataAdmin>().SaveDataTotal;
         savedataTotal.cSettingScreen.displayLocation[(int)EDropDown.Right] = displayNum[EDropDown.Right];
+        */
     }
     public void ChangeIsFullScreen()
     {
+        /*
         var savedataTotal = this.GetComponent<SaveDataAdmin>().SaveDataTotal;
-        savedataTotal.cSettingScreen.IsFullScreen = fullScreen.isOn;
+        savedataTotal.cSettingScreen.IsFullScreen = fullScreen.isOn;*/
     }
 
     [System.Serializable]
@@ -89,6 +94,7 @@ public class CntrSaveDataScreen : MonoBehaviour
     public CSettingScreen cSettingScreen;
     public void UpdateFromLoadedData()
     {
+        /*
         var savedataTotal = this.GetComponent<SaveDataAdmin>().SaveDataTotal;
         //SaveDataAdmin.CSaveDataTotal.CSettingScreen savedata = new SaveDataAdmin.CSaveDataTotal.CSettingScreen();
         var savedata = savedataTotal.cSettingScreen;
@@ -108,7 +114,7 @@ public class CntrSaveDataScreen : MonoBehaviour
         dropdowns[(int)EDropDown.Right].value = (int)savedata.displayLocation[(int)EDropDown.Right];
 
         fullScreen.isOn = savedata.IsFullScreen;
-        
+        */
     }
-    */
+    
 }

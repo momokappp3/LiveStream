@@ -15,7 +15,7 @@ namespace Assets.Scripts._System
 {
 	public class SceneTransition : MonoBehaviour
 	{
-		/*
+		
 		/// ------------------------------------
 		[Header("管理画面UI")]
 		[SerializeField] GameObject ModeSelectCanvas;
@@ -27,9 +27,9 @@ namespace Assets.Scripts._System
 		[SerializeField] Toggle[] FOV0;
 		[SerializeField] Toggle[] FOV1;
 		[Header("壁面共通UI")]
-		[SerializeField] DisplayUI_Wall displayUI_Wall;
+		//[SerializeField] DisplayUI_Wall displayUI_Wall;
 		[Header("マスターデータ：Scriptable Object")]
-		[SerializeField] SOGameLevel sOGameLevel;
+		//[SerializeField] SOGameLevel sOGameLevel;
 		[SerializeField] CntrAdminScreen cntrAdminScreen;
 		/// ------------------------------------
 
@@ -63,7 +63,7 @@ namespace Assets.Scripts._System
 		// Start is called before the first frame update
 		void Awake()
 		{
-			LoadSetUp();
+			//LoadSetUp();
 
 			kinectModeSelect[0] = GameObject.Find("Kinect0");
 			kinectModeSelect[1] = GameObject.Find("Kinect1");
@@ -113,6 +113,8 @@ namespace Assets.Scripts._System
 		/// </summary>
 		/// <param name="_eGameLists"></param>
 		/// <returns></returns>
+		///
+		/*
 		AssetReference getAssetReference(SOGameLevel.EGameLists _eGameLists)
 		{
 			///初期化
