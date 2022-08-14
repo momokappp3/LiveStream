@@ -29,6 +29,7 @@ public class SkeletalTrackingProvider : BackgroundDataProvider
             // Buffer allocations.
             BackgroundData currentFrameData = new BackgroundData();
             // Open device.
+            //ここで例外
             using (Device device = Device.Open(id))
             {
                 device.StartCameras(new DeviceConfiguration()

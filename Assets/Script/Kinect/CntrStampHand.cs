@@ -68,6 +68,7 @@ namespace Assets.Scripts._System._Kinect.Skeleton.Stamps
             /// ------------------------------------
             foreach (var hand in stampKeys)
             {
+                //null
                 handStamps[hand[0]].transform.position = trackerHandler.cAbsoluteJoint[(int)hand[0]].Node.position;
                 var vecAncle = new Vector3(
                     trackerHandler.cAbsoluteJoint[(int)hand[1]].Node.position.x - trackerHandler.cAbsoluteJoint[(int)hand[0]].Node.position.x,
