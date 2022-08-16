@@ -28,10 +28,10 @@ public class SkeletalTrackingProvider : BackgroundDataProvider
 
             // Buffer allocations.
             BackgroundData currentFrameData = new BackgroundData();
-            // Open device.
-            //ここで例外
+
             using (Device device = Device.Open(id))
             {
+                //ここで例外　(dllの場所が違った)
                 device.StartCameras(new DeviceConfiguration()
                 {
                     CameraFPS = FPS.FPS30,
@@ -44,6 +44,7 @@ public class SkeletalTrackingProvider : BackgroundDataProvider
 
                 var deviceCalibration = device.GetCalibration();
 
+                //ここで例外
                 using (Tracker tracker = Tracker.Create(deviceCalibration, new TrackerConfiguration() { ProcessingMode = TrackerProcessingMode.Cuda, SensorOrientation = SensorOrientation.Default }))
                 {
                     UnityEngine.Debug.Log("Body tracker created.");
