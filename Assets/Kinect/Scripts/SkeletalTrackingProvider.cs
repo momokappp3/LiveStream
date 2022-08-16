@@ -45,7 +45,8 @@ public class SkeletalTrackingProvider : BackgroundDataProvider
                 var deviceCalibration = device.GetCalibration();
 
                 //ここで例外
-                using (Tracker tracker = Tracker.Create(deviceCalibration, new TrackerConfiguration() { ProcessingMode = TrackerProcessingMode.Cuda, SensorOrientation = SensorOrientation.Default }))
+                using (Tracker tracker = Tracker.Create(deviceCalibration, new TrackerConfiguration() {
+                    ProcessingMode = TrackerProcessingMode.Cuda, SensorOrientation = SensorOrientation.Default }))
                 {
                     UnityEngine.Debug.Log("Body tracker created.");
                     while (!token.IsCancellationRequested)
@@ -96,7 +97,9 @@ public class SkeletalTrackingProvider : BackgroundDataProvider
 
                                 for (int it = currentFrameData.DepthImageWidth * currentFrameData.DepthImageHeight - 1; it > 0; it--)
                                 {
+                                    //ここで例外
                                     byte b = (byte)(depthFrame[it] / (ConfigLoader.Instance.Configs.SkeletalTracking.MaximumDisplayedDepthInMillimeters) * 255);
+                                        
                                     currentFrameData.DepthImage[byteCounter++] = b;
                                     currentFrameData.DepthImage[byteCounter++] = b;
                                     currentFrameData.DepthImage[byteCounter++] = b;

@@ -146,6 +146,7 @@ public class TrackerHandler : MonoBehaviour
         // render the closest body
         skeletonNum = _skeletonNumber;
         Body skeleton = _trackerFrameData.Bodies[_skeletonNumber];
+        //null
         renderSkeleton(skeleton);
     }
 
